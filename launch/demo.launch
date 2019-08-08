@@ -1,0 +1,9 @@
+<launch>
+  <node pkg="logger" type="event_logger_app.py" name="event_logger">
+    <param name="file_name" value="/home/event_log.txt" />
+    <param name="rate" value="10" />
+  </node>
+  <node pkg="logger" type="event_publisher_app.py" name="event_publisher">
+    <param name="rate" value="50" />
+  </node>
+</launch>
