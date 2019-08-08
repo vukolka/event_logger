@@ -21,8 +21,6 @@ def publisher():
     pub = EventPublisher()
     pub.enable_std_output(log_stdout)
 
-
-    
     # generate random msg in a loop with a given delay
     rospy.Timer(rospy.Duration(1. / rate), pub.publish_random_msg)
 

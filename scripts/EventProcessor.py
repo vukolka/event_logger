@@ -1,6 +1,6 @@
 import rospy
 import threading
-from ReportLogger import *
+from EventLogger import *
 from logger.msg import *
 import logger as lg
 from EventDispatcher import event_list
@@ -17,7 +17,7 @@ class EventProcessor():
         self._rate = rate
 
         # used for logging recieved data
-        self._logger = ReportLogger(file_name)
+        self._logger = EventLogger(file_name)
         
         # holds the last event we got from subscribers
         self._recent_event = None
