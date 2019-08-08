@@ -12,6 +12,7 @@ class EventProcessor():
 
     def __init__(self, rate=10, file_name='ros_event_log.csv'):
         """ init logger application """
+
         #configurable rate
         self._rate = rate
 
@@ -23,6 +24,14 @@ class EventProcessor():
         self._lock = threading.Lock()
         
         self._init_subs()
+
+    def enable_std_output(self, flag):
+        """ If set to True - logs both to console and to a file
+            Args:
+                flag(bool)
+        """
+        
+        self._logger.std_output = flag
 
     def _init_subs(self):
         """ Registers subscribers for the given topics """

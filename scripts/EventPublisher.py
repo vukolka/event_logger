@@ -11,12 +11,23 @@ class EventPublisher():
     """
     def __init__(self):
         """ Initialize and register Publishers """
+        self._std_output = False
         self._seq_counter = 0
+
+        #create publishers
         self._pub_list = []
         for event_type in event_list:
             event_class = getattr(lg.msg, event_type)
             sub = rospy.Publisher(event_type, event_class, queue_size=1)
             self._pub_list.append(sub)
+
+    def enable_std_output(self, flag):
+        """ If set to True - logs both to console and to a file
+            Args:
+                flag(bool)
+        """
+        
+        self._std_output = flag
 
     def _generate_msg(self, event_id):
         """ Given the id of event - generates corresponding message from event_list
@@ -46,4 +57,5 @@ class EventPublisher():
         event_id = random.randint(0, len(event_list) - 1)
         msg = self._generate_msg(event_id) 
         self._pub_list[event_id].publish(msg)
-        print event_list[event_id]
+        if self._std_output is True:
+            rospy.loginfo(event_list[event_id])

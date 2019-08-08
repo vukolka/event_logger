@@ -1,6 +1,7 @@
 from EventDispatcher import event_props
 from EventDispatcher import event_list
 import rospy
+import os.path
 
 class ReportLogger:
     """Class for formating and writing events to files"""
@@ -9,6 +10,14 @@ class ReportLogger:
         """ initialize log writer """
         self._file_path = file_path
         self._log_msg = ''
+
+        # flag for output to the console
+        self.std_output = False
+
+        # check if file exists
+        if os.path.isfile(file_path):
+            rospy.logwarn("File already exist - appending to the existing file")
+
 
     def log_event(self, event):
         """ Dispatch all event's properties and store to a file 
@@ -25,6 +34,11 @@ class ReportLogger:
                 log_method = getattr(self, '_log_' + attr)
                 log_method(event)
         self._dump()
+
+
+    def _log_missed_report(self):
+        """ logs if a status report was missed """
+        log('Missed status report')
 
     def _log_base_event(self, msg):
         """ Put common information of an event to a file
@@ -73,7 +87,11 @@ class ReportLogger:
                 msg(logger.msg.*) Base class of an event
 
         """
-        rospy.loginfo(self._log_msg + '\n')
+        if self.std_output is True:
+            rospy.loginfo(self._log_msg + '\n')
         with open(self._file_path, 'a+') as f:
-            f.write(self._log_msg)
+            t = rospy.Time.now()
+            t = t.secs + t.nsecs * 1e-9
+            f.write("[INFO]: %f. " % t)
+            f.write(self._log_msg + '\n')
         self._log_msg = ''
