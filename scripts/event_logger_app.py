@@ -9,7 +9,7 @@ def logger_client():
 
     #default params
     rate = 10
-    file_name = '/home/logger_client_log.txt'
+    file_name = '/tmp/logger_client_log.txt'
     log_stdout = False
 
     #set up params for logger
