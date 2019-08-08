@@ -3,7 +3,7 @@ from EventDispatcher import event_list
 import rospy
 import os.path
 
-class ReportLogger:
+class EventLogger:
     """Class for formating and writing events to files"""
 
     def __init__(self, file_path):
