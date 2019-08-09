@@ -38,7 +38,7 @@ class EventLogger:
 
     def _log_missed_report(self):
         """ logs if a status report was missed """
-        log('Missed status report')
+        self._log('Missed status report')
 
     def _log_base_event(self, msg):
         """ Put common information of an event to a file
